@@ -27,6 +27,7 @@ let
       cmakeVersions = [ "3.22.1" ];
       includeNDK = true;
       ndkVersions = [
+        "28.2.13676358"
         "27.0.12077973"
         "26.3.11579264"
       ];

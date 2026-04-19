@@ -7,7 +7,8 @@ This project provides a unified AI backend for image generation, inpainting, bac
 Runs on your local machine.
 
 > [!IMPORTANT]
-> Requires Cuda-enabled NVIDIA GPU
+> Requires Cuda-enabled NVIDIA GPU  
+> Might require additional intervention for PyTorch installation
 
 To run backend locally, run the following commands:
 
@@ -15,6 +16,9 @@ To run backend locally, run the following commands:
 pip install -r requirements.txt
 python ./index.py
 ```
+
+> [!NOTE]
+> Tested on Python 3.11, compatibility with other versions is not guaranteed
 
 ## 2. Cloud Server (`modal_app.py`)
 

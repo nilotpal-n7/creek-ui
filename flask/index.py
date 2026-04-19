@@ -314,6 +314,7 @@ if FLORENCE_AVAILABLE:
         else:
             print(f"⚠️ Florence-2 folder not found at: {FLORENCE_PATH}")
     except Exception as e:
+        import traceback; traceback.print_exc()
         print(f"❌ Failed to load Florence-2: {e}")
 
 
