@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image/image.dart' as img;
@@ -166,11 +167,11 @@ class FileService {
             );
           }
         } catch (e) {
-          print('Error decoding image metadata for $filePath: $e');
+          debugPrint('Error decoding image metadata for $filePath: $e');
         }
       }
     } catch (e) {
-      print('Error accessing file metadata for $filePath: $e');
+      debugPrint('Error accessing file metadata for $filePath: $e');
     }
 
     return FileMetadataInfo();

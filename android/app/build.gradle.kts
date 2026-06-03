@@ -68,7 +68,11 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            } else {
+                signingConfig = signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true 
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -80,7 +84,7 @@ chaquopy {
     defaultConfig {
         version = "3.8"
         val isWindows = System.getProperty("os.name").lowercase().contains("windows")
-        val pythonFile = if (isWindows) file("../../python_env/Scripts/python.exe") else file("../../python_env/bin/python")
+        val pythonFile = if (isWindows) file("../../.venv/Scripts/python.exe") else file("../../.venv/bin/python")
 
         if (pythonFile.exists()) {
             println("Using local python environment: ${pythonFile.absolutePath}")

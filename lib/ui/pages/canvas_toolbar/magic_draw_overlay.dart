@@ -285,7 +285,7 @@ class _MagicDrawToolsState extends State<MagicDrawTools> {
                 ),
               ),
             );
-          }).toList(),
+          }),
           const Divider(height: 1, color: Variables.borderSubtle),
         ],
       ),

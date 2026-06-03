@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:creekui/services/project_service.dart';
 import 'package:creekui/ui/styles/variables.dart';
 import 'package:creekui/ui/widgets/search_bar.dart';
 import 'package:creekui/ui/widgets/project_selector.dart';

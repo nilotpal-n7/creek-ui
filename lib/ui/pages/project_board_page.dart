@@ -14,7 +14,6 @@ import 'package:creekui/ui/widgets/empty_state.dart';
 import 'project_tag_page.dart';
 import 'project_board_page_alternate.dart';
 import 'image_save_page.dart';
-import 'image_details_page.dart';
 import 'stylesheet_page.dart';
 
 class ProjectBoardPage extends StatefulWidget {

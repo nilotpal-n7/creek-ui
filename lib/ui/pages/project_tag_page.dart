@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:creekui/ui/styles/variables.dart';
@@ -55,9 +54,9 @@ class _ProjectTagPageState extends State<ProjectTagPage> {
             if (!notes.any((n) => n.category.isNotEmpty)) matches = true;
           }
         } else {
-          if (img.tags.contains(widget.tag))
+          if (img.tags.contains(widget.tag)) {
             matches = true;
-          else {
+          } else {
             final notes = await _noteRepo.getNotesForImage(img.id);
             if (notes.any((n) => n.category == widget.tag)) matches = true;
           }

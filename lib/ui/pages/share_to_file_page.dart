@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
 import 'package:creekui/services/file_service.dart';
 import 'package:creekui/services/project_service.dart';
 import 'package:creekui/data/models/file_model.dart';

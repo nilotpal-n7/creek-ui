@@ -142,10 +142,11 @@ class _ImageSavePageState extends State<ImageSavePage> {
   void _toggleTag(String tag) {
     setState(() {
       final tags = _tagsPerImage[_currentImageIndex]!;
-      if (tags.contains(tag))
+      if (tags.contains(tag)) {
         tags.remove(tag);
-      else
+      } else {
         tags.add(tag);
+      }
     });
   }
 
@@ -172,23 +173,27 @@ class _ImageSavePageState extends State<ImageSavePage> {
     if (Rect.fromCircle(
       center: rect.topLeft,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.topLeft;
+    }
     if (Rect.fromCircle(
       center: rect.topRight,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.topRight;
+    }
     if (Rect.fromCircle(
       center: rect.bottomLeft,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.bottomLeft;
+    }
     if (Rect.fromCircle(
       center: rect.bottomRight,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.bottomRight;
+    }
     if (rect.contains(pos)) return DragHandle.center;
     return DragHandle.none;
   }
@@ -288,8 +293,9 @@ class _ImageSavePageState extends State<ImageSavePage> {
           newRect = newRect.normalize();
         }
 
-        if (newRect.width > 10 && newRect.height > 10)
+        if (newRect.width > 10 && newRect.height > 10) {
           _finalSelectionRect = newRect;
+        }
       });
     }
   }
@@ -394,9 +400,9 @@ class _ImageSavePageState extends State<ImageSavePage> {
             backgroundColor: Colors.green,
           ),
         );
-        if (widget.isFromShare)
+        if (widget.isFromShare) {
           SystemNavigator.pop();
-        else
+        } else {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -408,6 +414,7 @@ class _ImageSavePageState extends State<ImageSavePage> {
             ),
             (route) => false,
           );
+        }
       }
     } catch (e) {
       if (mounted) {

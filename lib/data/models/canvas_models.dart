@@ -77,11 +77,11 @@ class SketchLayer extends CanvasLayer {
   final bool isMagicDraw;
 
   SketchLayer({
-    required String id,
+    required super.id,
     this.paths = const [],
     this.isMagicDraw = false,
-    bool isVisible = true,
-  }) : super(id: id, type: LayerType.sketch, isVisible: isVisible);
+    super.isVisible,
+  }) : super(type: LayerType.sketch);
 
   @override
   Map<String, dynamic> toMap() {
@@ -107,8 +107,8 @@ class SketchLayer extends CanvasLayer {
 class ImageLayer extends CanvasLayer {
   final Map<String, dynamic> data;
 
-  ImageLayer({required String id, required this.data, bool isVisible = true})
-    : super(id: id, type: LayerType.image, isVisible: isVisible);
+  ImageLayer({required super.id, required this.data, super.isVisible})
+    : super(type: LayerType.image);
 
   @override
   Map<String, dynamic> toMap() {

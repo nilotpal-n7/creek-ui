@@ -14,7 +14,7 @@ class LayersPanel extends StatefulWidget {
   final VoidCallback? onAddLayer;
 
   const LayersPanel({
-    Key? key,
+    super.key,
     required this.layers,
     required this.activeLayerId,
     required this.isOpen,
@@ -24,7 +24,7 @@ class LayersPanel extends StatefulWidget {
     required this.onToggleVisibility,
     required this.onLayerTap,
     this.onAddLayer,
-  }) : super(key: key);
+  });
 
   @override
   State<LayersPanel> createState() => _LayersPanelState();

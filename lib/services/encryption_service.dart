@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:cryptography/cryptography.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EncryptionService {
@@ -66,7 +66,7 @@ class EncryptionService {
 
       return utf8.decode(decryptedBytes);
     } catch (e) {
-      print("Decryption error: $e");
+      debugPrint("Decryption error: $e");
       return null;
     }
   }

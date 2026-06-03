@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -22,18 +21,15 @@ import 'package:creekui/services/flask_service.dart';
 import 'package:creekui/ui/styles/variables.dart';
 import 'package:creekui/data/models/canvas_models.dart';
 import 'package:creekui/ui/painters/canvas_painter.dart';
-import 'package:creekui/utils/image_utils.dart';
 
 import 'package:creekui/ui/widgets/canvas/manipulating_box.dart';
 import 'package:creekui/ui/widgets/canvas/canvas_bottom_bar.dart';
 import 'package:creekui/ui/widgets/canvas/asset_picker_sheet.dart';
 import 'package:creekui/ui/widgets/canvas/layers_panel.dart';
-import 'package:creekui/ui/widgets/app_bar.dart';
 import 'package:creekui/ui/widgets/dialog.dart';
 import 'package:creekui/ui/widgets/text_field.dart';
 import './canvas_toolbar/magic_draw_overlay.dart';
 import './canvas_toolbar/text_tools_overlay.dart';
-import 'project_file_page.dart';
 
 class CanvasPage extends StatefulWidget {
   final int projectId;
@@ -367,7 +363,7 @@ class _CanvasPageState extends State<CanvasPage> {
         if (targetLayer == null) {
           try {
             targetLayer = _layers.lastWhere(
-              (l) => l is SketchLayer && (l as SketchLayer).isMagicDraw,
+              (l) => l is SketchLayer && l.isMagicDraw,
             );
             _activeLayerId = targetLayer.id;
           } catch (_) {
@@ -403,9 +399,7 @@ class _CanvasPageState extends State<CanvasPage> {
       // Check if there are image layers (which dictates the context)
       bool hasImageLayers = _layers.any((l) => l is ImageLayer);
 
-      if (_tempBaseImage == null) {
-        _tempBaseImage = await _captureCanvasToFile();
-      }
+      _tempBaseImage ??= await _captureCanvasToFile();
       if (_tempBaseImage == null) return;
 
       // Consolidate paths from all active magic layers for mask
@@ -596,8 +590,9 @@ class _CanvasPageState extends State<CanvasPage> {
 
                             // Render Layers
                             ..._layers.map((layer) {
-                              if (!layer.isVisible)
+                              if (!layer.isVisible) {
                                 return const SizedBox.shrink();
+                              }
 
                               bool isFlashing = layer.id == _flashingLayerId;
 
@@ -624,8 +619,9 @@ class _CanvasPageState extends State<CanvasPage> {
                                   transformationController:
                                       _transformationController,
                                   onTap: () {
-                                    if (!_isMagicDrawActive)
+                                    if (!_isMagicDrawActive) {
                                       _setActiveLayer(layer.id);
+                                    }
                                   },
                                   onDoubleTap: () {
                                     if (e['type'] == 'text') _enterEditMode(e);
@@ -676,7 +672,7 @@ class _CanvasPageState extends State<CanvasPage> {
                                 );
                               }
                               return const SizedBox.shrink();
-                            }).toList(),
+                            }),
 
                             // Active Drawing Surface
                             IgnorePointer(
@@ -1048,8 +1044,9 @@ class _CanvasPageState extends State<CanvasPage> {
       final project = await ProjectRepo().getProjectById(pId);
       if (project != null && project.globalStylesheet != null) {
         final styleData = StylesheetService().parse(project.globalStylesheet);
-        if (mounted && styleData.colors.isNotEmpty)
+        if (mounted && styleData.colors.isNotEmpty) {
           setState(() => _brandColors = styleData.colors);
+        }
       }
     } catch (e) {
       debugPrint("Error loading brand colors: $e");
@@ -1299,11 +1296,12 @@ class _CanvasPageState extends State<CanvasPage> {
     } catch (e) {
       debugPrint("BG Removal Failed: $e");
     } finally {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _isRemovingBg = false;
           _showBgRemovalBanner = false;
         });
+      }
     }
   }
 
@@ -1351,8 +1349,9 @@ class _CanvasPageState extends State<CanvasPage> {
         if (path.points.length > 1) {
           final Path p = Path();
           p.moveTo(path.points.first.offset.dx, path.points.first.offset.dy);
-          for (int i = 1; i < path.points.length; i++)
+          for (int i = 1; i < path.points.length; i++) {
             p.lineTo(path.points[i].offset.dx, path.points[i].offset.dy);
+          }
           canvas.drawPath(p, paint);
         } else if (path.points.isNotEmpty) {
           canvas.drawPoints(ui.PointMode.points, [
@@ -1579,11 +1578,12 @@ class _CanvasPageState extends State<CanvasPage> {
       final meta = await _fileService.getFileMetadata(
         widget.existingFile!.filePath,
       );
-      if (meta.width > 0 && meta.height > 0)
+      if (meta.width > 0 && meta.height > 0) {
         setState(() {
           _canvasSize = Size(meta.width, meta.height);
           _hasInitializedView = false;
         });
+      }
       final file = File(widget.existingFile!.filePath);
       if (await file.exists()) {
         final jsonString = await file.readAsString();
@@ -1591,25 +1591,29 @@ class _CanvasPageState extends State<CanvasPage> {
         setState(() {
           _layers.clear();
           if (decoded is Map && decoded.containsKey('layers')) {
-            for (var item in decoded['layers'])
+            for (var item in decoded['layers']) {
               _layers.add(CanvasLayer.fromMap(item));
+            }
           } else if (decoded is Map && decoded.containsKey('elements')) {
-            for (var e in _jsonToElements(decoded['elements']))
+            for (var e in _jsonToElements(decoded['elements'])) {
               _layers.add(ImageLayer(id: e['id'], data: e));
+            }
             if (decoded['paths'] != null) {
               final paths =
                   (decoded['paths'] as List)
                       .map((p) => DrawingPath.fromMap(p))
                       .toList();
-              if (paths.isNotEmpty)
+              if (paths.isNotEmpty) {
                 _layers.add(SketchLayer(id: 'legacy_sketch', paths: paths));
+              }
             }
           }
           _hasUnsavedChanges = false;
           _activeLayerId = _layers.isNotEmpty ? _layers.last.id : null;
         });
-        if (widget.injectedMedia != null)
+        if (widget.injectedMedia != null) {
           _addAssetsToCanvas([widget.injectedMedia!.path]);
+        }
       }
     } catch (e) {
       debugPrint("Error loading: $e");
@@ -1654,10 +1658,12 @@ class _CanvasPageState extends State<CanvasPage> {
   List<Map<String, dynamic>> _jsonToElements(List<dynamic> jsonList) {
     return jsonList.map((item) {
       final e = Map<String, dynamic>.from(item);
-      if (e['position'] is Map)
+      if (e['position'] is Map) {
         e['position'] = Offset(e['position']['dx'], e['position']['dy']);
-      if (e['size'] is Map)
+      }
+      if (e['size'] is Map) {
         e['size'] = Size(e['size']['width'], e['size']['height']);
+      }
       e['rotation'] = (e['rotation'] as num).toDouble();
       return e;
     }).toList();

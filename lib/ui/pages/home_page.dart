@@ -1,7 +1,4 @@
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:creekui/data/models/project_model.dart';
 import 'package:creekui/data/models/file_model.dart';
@@ -108,12 +105,15 @@ class _HomePageState extends State<HomePage> {
   String _formatTimeAgo(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);
-    if (difference.inDays > 0)
+    if (difference.inDays > 0) {
       return 'Edited ${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
-    if (difference.inHours > 0)
+    }
+    if (difference.inHours > 0) {
       return 'Edited ${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
-    if (difference.inMinutes > 0)
+    }
+    if (difference.inMinutes > 0) {
       return 'Edited ${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
+    }
     return 'Edited just now';
   }
 
@@ -124,8 +124,9 @@ class _HomePageState extends State<HomePage> {
     // If the project has a parent, it's an event. Show Parent / Event
     if (project.parentId != null) {
       final parentProject = _projectMap[project.parentId!];
-      if (parentProject != null)
+      if (parentProject != null) {
         return '${parentProject.title} / ${project.title}';
+      }
     }
     // Otherwise just the project name
     return project.title;
@@ -184,10 +185,11 @@ class _HomePageState extends State<HomePage> {
               _loadData();
             }
           } catch (e) {
-            if (mounted)
+            if (mounted) {
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Error renaming: $e')));
+            }
           }
         }
       },
@@ -214,10 +216,11 @@ class _HomePageState extends State<HomePage> {
             _loadData();
           }
         } catch (e) {
-          if (mounted)
+          if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error deleting project: $e')),
             );
+          }
         }
       },
     );
@@ -727,8 +730,8 @@ class _SeeAllPageState extends State<_SeeAllPage> {
   bool _isLoading = true;
   List<dynamic> _items = [];
   Map<int, ProjectModel> _projectMap = {};
-  Map<int, List<String>> _projectPreviews = {};
-  Map<String, Map<String, String>> _fileMetadata = {};
+  final Map<int, List<String>> _projectPreviews = {};
+  final Map<String, Map<String, String>> _fileMetadata = {};
 
   @override
   void initState() {

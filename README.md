@@ -1,4 +1,4 @@
-# CreekUI | Re-Imagining Photoshop | The AI Editor of 2030
+# TEAM 33 | CreekUI | Re-Imagining Photoshop | The AI Editor of 2030
 
 CreekUI is a lightweight, intent-driven mobile image editor designed to shift the creative workflow from manual pixel manipulation to semantic, AI-assisted design. It separates creativity into structured phases that prioritize **semantic understanding**, **energy efficiency**, and **selective use of heavy compute**.
 

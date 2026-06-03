@@ -170,23 +170,27 @@ class _ImageDetailsPageState extends State<ImageDetailsPage> {
     if (Rect.fromCircle(
       center: rect.topLeft,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.topLeft;
+    }
     if (Rect.fromCircle(
       center: rect.topRight,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.topRight;
+    }
     if (Rect.fromCircle(
       center: rect.bottomLeft,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.bottomLeft;
+    }
     if (Rect.fromCircle(
       center: rect.bottomRight,
       radius: _handleSize,
-    ).contains(pos))
+    ).contains(pos)) {
       return DragHandle.bottomRight;
+    }
     if (rect.contains(pos)) return DragHandle.center;
     return DragHandle.none;
   }
@@ -285,8 +289,9 @@ class _ImageDetailsPageState extends State<ImageDetailsPage> {
           newRect = newRect.normalize();
         }
 
-        if (newRect.width > 10 && newRect.height > 10)
+        if (newRect.width > 10 && newRect.height > 10) {
           _finalSelectionRect = newRect;
+        }
       });
     }
   }
@@ -345,11 +350,12 @@ class _ImageDetailsPageState extends State<ImageDetailsPage> {
                 final updatedNotes = await _noteService.getNotesForImage(
                   widget.imageId,
                 );
-                if (mounted)
+                if (mounted) {
                   setState(() {
                     _notes = updatedNotes;
                     _finalSelectionRect = null;
                   });
+                }
                 if (context.mounted) Navigator.pop(context);
               }
             },

@@ -37,7 +37,7 @@ Download from [python.org](https://www.python.org/downloads/release/python-3810/
 #### B) Set up Virtual Environment
 
 ```bash
-python -m venv python_env
+python -m venv .venv
 ```
 
 ### 3. Create .env

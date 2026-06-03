@@ -25,7 +25,7 @@ class AssetPickerSheet extends StatefulWidget {
 class _AssetPickerSheetState extends State<AssetPickerSheet> {
   List<String> _assets = [];
   bool _isLoading = true;
-  Set<String> _selectedPaths = {};
+  final Set<String> _selectedPaths = {};
 
   @override
   void initState() {

@@ -169,7 +169,7 @@ class _ProjectFilePageState extends State<ProjectFilePage> {
       isDestructive: true,
       onPrimaryPressed: () async {
         try {
-          await _fileService.deleteFile(file.id!);
+          await _fileService.deleteFile(file.id);
           final disk = File(file.filePath);
           if (await disk.exists()) await disk.delete();
 

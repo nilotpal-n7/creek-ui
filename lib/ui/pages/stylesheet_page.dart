@@ -302,13 +302,15 @@ class _StylesheetPageState extends State<StylesheetPage> {
 
     if (data is List) {
       for (var item in data) {
-        if (item is Map && item.containsKey('path'))
+        if (item is Map && item.containsKey('path')) {
           logoPaths.add(item['path'].toString());
-        else if (item is String)
+        } else if (item is String) {
           logoPaths.add(item);
+        }
       }
-    } else if (data is String)
+    } else if (data is String) {
       logoPaths.add(data);
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
